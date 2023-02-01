@@ -2,7 +2,6 @@ import pyautogui
 import time
 import cv2 as cv 
 import numpy as np
-from screeninfo import get_monitors
 import sys
 
 branch = "Icons/"
@@ -16,7 +15,7 @@ except:
 	print("Message icon not recognized? Is it in Icons?")
 	exit()
 
-messageLocation = pyautogui.locateOnScreen(corrected_img1, confidence=.75)
+messageLocation = pyautogui.locateOnScreen(corrected_img1, confidence=.75) 
 try:
 	messageLocationCenter = pyautogui.center(messageLocation) 
 except TypeError:
@@ -26,17 +25,17 @@ except TypeError:
 messagex, messagey = messageLocationCenter.x, messageLocationCenter.y
 
 
-for i in range(3):
-	print(i+1)
-	time.sleep(1)
+#for i in range(3):
+#	print(i+1)
+#	time.sleep(1)
 
 
-pyautogui.moveTo(messagex/screenWidth * guiWidth, messagey/screenHeight * guiHeight, 2)
+pyautogui.moveTo(messagex/screenWidth * guiWidth, messagey/screenHeight * guiHeight)
 pyautogui.click()
 
 time.sleep(0.5)
 
-path = branch+str(sys.argv[-1])+'.png'
+path = branch+'Contacts/'+str(sys.argv[-1])+'.png'
 img2 = cv.imread(path)
 
 try:
@@ -46,7 +45,7 @@ except:
         exit()
 sentence = ' '.join(sys.argv[1:-1])
 
-contactLocation = pyautogui.locateOnScreen(corrected_img2, confidence=.7)
+contactLocation = pyautogui.locateOnScreen(corrected_img2, confidence=.80)
 
 try:
 	contactLocationCenter = pyautogui.center(contactLocation)
@@ -55,13 +54,13 @@ except TypeError:
         exit()
 
 contactx, contacty = contactLocationCenter.x, contactLocationCenter.y
-pyautogui.moveTo(contactx/screenWidth * guiWidth, contacty/screenHeight * guiHeight, 2)
+pyautogui.moveTo(contactx/screenWidth * guiWidth, contacty/screenHeight * guiHeight)
 pyautogui.click()
 
 pyautogui.write(sentence)
 choice = pyautogui.confirm(text='enter', title='Enter?', buttons=['OK', 'Cancel'])
 
 if choice == 'OK':
-	pyautogui.moveTo(contactx/screenWidth * guiWidth, contacty/screenHeight * guiHeight, 2)
+	pyautogui.moveTo(contactx/screenWidth * guiWidth, contacty/screenHeight * guiHeight)
 	pyautogui.click()
 	pyautogui.press('enter')
